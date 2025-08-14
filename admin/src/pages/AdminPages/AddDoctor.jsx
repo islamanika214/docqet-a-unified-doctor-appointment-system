@@ -56,19 +56,32 @@ const AddDoctor = () => {
             //     }
             // );
 
-            const { data } = await axios.post(
-                `${backendUrl}api/admin/add-doctor`,
-                formData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${aToken}`,
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
+            //
+            const url = new URL(
+                "/api/admin/add-doctor",
+                import.meta.env.VITE_BACKEND_URL
+            ).toString();
+
+            const { data } = await axios.post(url, formData, {
+                headers: {
+                    Authorization: `Bearer ${aToken}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            }); //
 
             if (data.success) {
                 toast.success(data.message);
+                setDocImg(false);
+                setFullName("");
+                setEmail("");
+                setPassword("");
+                setYearsOfService("1 year");
+                setFees("");
+                setBio("");
+                setSpeciality("General Physician");
+                setQualification("");
+                setStreet("");
+                setArea("");
             } else {
                 toast.error(data.message);
             }
