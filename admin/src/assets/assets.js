@@ -6,7 +6,7 @@ import doctor_icon from "./doctor_icon.svg";
 import earning_icon from "./earning_icon.svg";
 import home_icon from "./home_icon.svg";
 import list_icon from "./list_icon.svg";
-import admin_logo from "./Logo_admin.svg";
+import admin_logo from "./Logo_admin.png";
 import patients_icon from "./patients_icon.svg";
 import people_icon from "./people_icon.svg";
 import tick_icon from "./tick_icon.svg";
