@@ -13,7 +13,7 @@ const Navbar = () => {
         aToken && localStorage.removeItem("aToken");
     };
     return (
-        <div className="flex justify-between items-center px-4 sm:px-10 py-3 border-b bg-mintMist">
+        <div className="flex justify-between items-center px-4 sm:px-10 py-3 border-b bg-mintMist ">
             <div className="flex items-center gap-2 text-xs">
                 <img
                     className="max-w-[150px] h-[110px] cursor-pointer relative -top-2"
