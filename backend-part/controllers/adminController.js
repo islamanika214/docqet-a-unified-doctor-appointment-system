@@ -10,25 +10,6 @@ import {
 // API for adding doctor
 
 const addDoctor = async (req, res) => {
-    //added for testing
-    const addDoctor = async (req, res) => {
-        try {
-            console.log("1. Request received");
-            console.log("2. File exists?", !!req.file);
-            console.log("3. Request body:", req.body);
-
-            // ... rest of your existing code ...
-
-            console.log("4. Before saving doctor");
-            await newDoctor.save();
-            console.log("5. Doctor saved successfully");
-
-            res.json({ success: true, message: "Doctor Added" });
-        } catch (error) {
-            console.log("6. ERROR:", error);
-            res.json({ success: false, message: error.message });
-        }
-    }; // added for testing
     try {
         const {
             fullName,
@@ -151,4 +132,4 @@ const allDoctors = async (req, res) => {
     }
 };
 
-export { addDoctor, loginAdmin };
+export { addDoctor, allDoctors, loginAdmin };
