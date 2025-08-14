@@ -2,7 +2,10 @@ import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import jwt from "jsonwebtoken";
 import validator from "validator";
-import doctorModel from "../models/doctorModel.js";
+import {
+    default as doctorModel,
+    default as doctortModel,
+} from "../models/doctorModel.js";
 
 // API for adding doctor
 
@@ -140,6 +143,7 @@ const loginAdmin = async (req, res) => {
 
 const allDoctors = async (req, res) => {
     try {
+        const doctors = await doctortModel.find({}).select("-password");
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: error.message });
