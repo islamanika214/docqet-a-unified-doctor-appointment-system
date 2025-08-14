@@ -7,6 +7,25 @@ import doctorModel from "../models/doctorModel.js";
 // API for adding doctor
 
 const addDoctor = async (req, res) => {
+    //added for testing
+    const addDoctor = async (req, res) => {
+        try {
+            console.log("1. Request received");
+            console.log("2. File exists?", !!req.file);
+            console.log("3. Request body:", req.body);
+
+            // ... rest of your existing code ...
+
+            console.log("4. Before saving doctor");
+            await newDoctor.save();
+            console.log("5. Doctor saved successfully");
+
+            res.json({ success: true, message: "Doctor Added" });
+        } catch (error) {
+            console.log("6. ERROR:", error);
+            res.json({ success: false, message: error.message });
+        }
+    }; // added for testing
     try {
         const {
             fullName,
@@ -55,10 +74,28 @@ const addDoctor = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         //upload image to cloudinary
-        const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
-            resourece_type: "image",
-        });
-        const imageUrl = imageUpload.secure_url;
+        // const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+        //     resource_type: "image",
+        // });
+        // const imageUrl = imageUpload.secure_url;
+
+        let imageUrl;
+        try {
+            const imageUpload = await cloudinary.uploader.upload(
+                imageFile.path,
+                {
+                    resource_type: "image",
+                    folder: "doctor_images", // Add folder for better organization
+                }
+            );
+            imageUrl = imageUpload.secure_url;
+        } catch (uploadError) {
+            console.error("Cloudinary upload failed:", uploadError);
+            return res.json({
+                success: false,
+                message: "Failed to upload doctor image",
+            });
+        }
         // const imageUrl = "default.jpg";
         const doctorData = {
             fullName,
@@ -76,7 +113,7 @@ const addDoctor = async (req, res) => {
 
         const newDoctor = new doctorModel(doctorData);
         await newDoctor.save();
-        res.json({ sucess: true, message: "Doctor Added" });
+        res.json({ success: true, message: "Doctor Added" });
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: error.message });

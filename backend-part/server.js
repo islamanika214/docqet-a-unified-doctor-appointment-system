@@ -17,9 +17,26 @@ connectCloudinary();
 doctorApp.use(express.json());
 doctorApp.use(cors());
 
+// addeded for testing
+
+// Add this after your other middlewares but before routes
+doctorApp.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    console.log("Headers:", req.headers);
+    console.log("Body:", req.body);
+    next();
+});
+
 // API endpoints
 
+// doctorApp.use("/api/admin", adminRouter);
+
+//added for testing
 doctorApp.use("/api/admin", adminRouter);
+doctorApp.use((err, req, res, next) => {
+    console.error("Route error:", err);
+    res.status(500).send("Something broke!");
+}); //added
 doctorApp.get("/", (req, res) => {
     res.send("API WORKING");
 });
