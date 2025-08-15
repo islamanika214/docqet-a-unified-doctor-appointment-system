@@ -1,7 +1,6 @@
 import axios from "axios";
-import { createContext } from "react";
-
-import { useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export const DoctorAppContext = createContext();
 
@@ -17,12 +16,21 @@ const DoctorAppContextProvider = (props) => {
 
     const getdoctorsData = async () => {
         try {
-            const { data } = await axios.get(backendUrl + "api/doctor/list");
+            const { data } = await axios.get(backendUrl + "/api/doctor/list");
             if (data.success) {
-                setDoctorsList(data.doctorsList);
+                setDoctorsList(data.doctors);
+            } else {
+                toast.error(data.message);
             }
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message);
+        }
     };
+
+    useEffect(() => {
+        getdoctorsData();
+    }, []);
     return (
         <DoctorAppContext.Provider value={doctorData}>
             {props.children}
