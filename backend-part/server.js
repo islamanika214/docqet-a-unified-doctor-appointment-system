@@ -30,6 +30,7 @@ doctorApp.use((err, req, res, next) => {
 }); //added
 
 doctorApp.use("/api/doctor", doctorRouter);
+
 doctorApp.get("/", (req, res) => {
     res.send("API WORKING");
 });
