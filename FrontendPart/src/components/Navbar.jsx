@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
+import { DoctorAppContext } from "../context/DoctorAppContexts";
 const Navbar = () => {
     const navigate = useNavigate();
 
     const [showMenu, setShowMenu] = useState(false);
-    const [loginToken, setLoginToken] = useState(true);
+    const { token, setToken } = useContext(DoctorAppContext);
+
+    const logout = () => {
+        setToken(false);
+        localStorage.removeItem("token");
+    };
 
     {
     }
@@ -51,7 +57,7 @@ const Navbar = () => {
                 </NavLink>
             </ul>
             <div className="flex items-center gap-4">
-                {loginToken ? (
+                {token ? (
                     <div className="flex flex-col items-center gap-2 cursor-pointer group relative">
                         <img
                             className="w-10 mt-5 rounded-full"
@@ -78,7 +84,7 @@ const Navbar = () => {
                                     My Appointments
                                 </p>
                                 <p
-                                    onClick={() => setLoginToken(false)}
+                                    onClick={logout}
                                     className="hover:text-darkSageGlow cursor-pointer"
                                 >
                                     Logout

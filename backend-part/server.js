@@ -6,6 +6,7 @@ import connectCloudinary from "./config/cloudinary.js";
 import connectDB from "./config/mongodb.js";
 import adminRouter from "./routes/adminoute.js";
 import doctorRouter from "./routes/doctorRoute.js";
+import userRouter from "./routes/userRoute.js";
 
 // App configuration
 
@@ -30,6 +31,8 @@ doctorApp.use((err, req, res, next) => {
 }); //added
 
 doctorApp.use("/api/doctor", doctorRouter);
+
+doctorApp.use("/api/user", userRouter);
 
 doctorApp.get("/", (req, res) => {
     res.send("API WORKING");
