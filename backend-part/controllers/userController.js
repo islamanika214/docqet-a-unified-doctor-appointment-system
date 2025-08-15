@@ -1,5 +1,7 @@
 import validator from "validator";
 
+import bcrypt from "bcrypt";
+
 const registerUser = async (req, res) => {
     try {
         const { fullName, email, password } = req.body;
@@ -16,5 +18,14 @@ const registerUser = async (req, res) => {
                 message: "Enter a strong password",
             });
         }
+
+        // hashing user password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        const userData = {
+            fullName,
+            email,
+            password: hashedPassword,
+        };
     } catch (error) {}
 };
