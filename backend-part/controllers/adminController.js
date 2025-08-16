@@ -69,7 +69,7 @@ const addDoctor = async (req, res) => {
                 imageFile.path,
                 {
                     resource_type: "image",
-                    folder: "doctor_images", // Add folder for better organization
+                    folder: "doctor_images",
                 }
             );
             imageUrl = imageUpload.secure_url;

@@ -100,7 +100,9 @@ const updateProfile = async (req, res) => {
                 imageFile.path,
                 { resource_type: "image" }
             );
-            const imageUrl = imageUpload.secure_url;
+            const imageURL = imageUpload.secure_url;
+
+            await userModel.findByIdAndUpdate(userId, { image: imageURL });
         }
     } catch (error) {
         console.log(error);
@@ -108,4 +110,4 @@ const updateProfile = async (req, res) => {
     }
 };
 
-export { getProfile, loginUser, registerUser };
+export { getProfile, loginUser, registerUser, updateProfile };
