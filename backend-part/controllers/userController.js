@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import jwt from "jsonwebtoken";
 import validator from "validator";
+import appointmentModel from "../models/appointmentModel.js";
+import doctorModel from "../models/doctorModel.js";
 import userModel from "../models/userModel.js";
 
 const registerUser = async (req, res) => {
@@ -112,4 +114,56 @@ const updateProfile = async (req, res) => {
     }
 };
 
+const bookAppointment = async (req, res) => {
+    try {
+        const { userId, docId, slotDate, selectedSlotTime } = req.body;
+
+        const docData = await doctorModel.findById(docId).select("-password");
+
+        if (!docData.available) {
+            return res.json({
+                success: false,
+                message: "Doctor not Available",
+            });
+        }
+
+        let slots_booked = docData.slots_booked;
+
+        if (slots_booked[slotDate]) {
+            if (slots_booked[slotDate].includes(selectedSlotTime)) {
+                return res.json({
+                    success: false,
+                    message: "Slot not available",
+                });
+            } else {
+                slots_booked[slotDate].push(selectedSlotTime);
+            }
+        } else {
+            slots_booked[slotDate] = [];
+            slots_booked[slotDate].push(selectedSlotTime);
+        }
+        const userData = await userModel.findById(userId).select("-password");
+
+        delete doctorInfo.slots_booked;
+
+        const appointmentData = {
+            userId,
+            docId,
+            userData,
+            doctorInfo,
+            amount: doctorInfo.consultationFee,
+            selectedSlotTime,
+            slotDate,
+            date: Date.now(),
+            cancelled: false,
+            payment: false,
+            isCompleted: true,
+        };
+
+        const newAppointment = new appointmentModel(appointmentData);
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+};
 export { getProfile, loginUser, registerUser, updateProfile };
