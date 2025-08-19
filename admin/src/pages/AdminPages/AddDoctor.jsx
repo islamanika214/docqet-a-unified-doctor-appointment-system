@@ -10,7 +10,7 @@ const AddDoctor = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [yearsOfService, setYearsOfService] = useState("1 year");
-    const [fees, setFees] = useState("");
+    const [consultationFee, setconsultationFee] = useState("");
     const [bio, setBio] = useState("");
     const [speciality, setSpeciality] = useState("General Physician");
     const [qualification, setQualification] = useState("");
@@ -32,7 +32,7 @@ const AddDoctor = () => {
             formData.append("email", email);
             formData.append("password", password);
             formData.append("yearsOfService", yearsOfService);
-            formData.append("consultationFee", Number(fees));
+            formData.append("consultationFee", Number(consultationFee));
             formData.append("bio", bio);
             formData.append("speciality", speciality);
             formData.append("qualification", qualification);
@@ -76,7 +76,7 @@ const AddDoctor = () => {
                 setEmail("");
                 setPassword("");
                 setYearsOfService("1 year");
-                setFees("");
+                setconsultationFee("");
                 setBio("");
                 setSpeciality("General Physician");
                 setQualification("");
@@ -181,8 +181,10 @@ const AddDoctor = () => {
                         <div className="flex-1 flex flex-col gap-1">
                             <p>Doctor Appointment fees</p>
                             <input
-                                value={fees}
-                                onChange={(e) => setFees(e.target.value)}
+                                value={consultationFee}
+                                onChange={(e) =>
+                                    setconsultationFee(e.target.value)
+                                }
                                 className="border border-mossyFog rounded px-3 py-2 bg-mintMist"
                                 type="number"
                                 placeholder="Enter Doctor Appointment fees"

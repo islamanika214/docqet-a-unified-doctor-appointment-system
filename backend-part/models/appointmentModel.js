@@ -7,7 +7,7 @@ const appointmentSchema = new mongoose.Schema({
     selectedSlotTime: { type: String, required: true },
     userData: { type: Object, required: true },
     doctorInfo: { type: Object, required: true },
-    amount: { type: Number, required: true },
+    consultationFee: { type: Number, required: true },
     date: { type: Number, required: true },
     cancelled: { type: Boolean, default: false },
     payment: { type: Boolean, default: false },
