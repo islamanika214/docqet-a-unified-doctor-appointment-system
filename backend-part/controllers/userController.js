@@ -81,11 +81,12 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     try {
-        const { userId, fullName, phone, location, dob, gender } = req.body;
+        const userId = req.userId;
+        const { fullName, phone, location, dob, gender } = req.body;
         const imageFile = req.file;
 
         if (!fullName || !phone || !dob || !gender) {
-            return res.jason({ success: false, message: "Data Missing" });
+            return res.json({ success: false, message: "Data Missing" });
         }
         await userModel.findByIdAndUpdate(userId, {
             fullName,
@@ -102,8 +103,9 @@ const updateProfile = async (req, res) => {
             );
             const imageURL = imageUpload.secure_url;
 
-            await userModel.findByIdAndUpdate(userId, { image: imageURL });
+            await userModel.findByIdAndUpdate(userId, { photo: imageURL });
         }
+        res.json({ success: true, message: "Profile updated successfully" });
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: error.message });

@@ -6,7 +6,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const [showMenu, setShowMenu] = useState(false);
-    const { token, setToken } = useContext(DoctorAppContext);
+    const { token, setToken, userData } = useContext(DoctorAppContext);
 
     const logout = () => {
         setToken(false);
@@ -57,11 +57,11 @@ const Navbar = () => {
                 </NavLink>
             </ul>
             <div className="flex items-center gap-4">
-                {token ? (
+                {token && userData ? (
                     <div className="flex flex-col items-center gap-2 cursor-pointer group relative">
                         <img
                             className="w-10 mt-5 rounded-full"
-                            src={assets.profile_pic}
+                            src={userData.photo}
                             alt=""
                         />
                         <img
