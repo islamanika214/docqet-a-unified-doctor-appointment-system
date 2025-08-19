@@ -1,13 +1,4 @@
 import mongoose from "mongoose";
-// const { docId } = useParams();
-// const { doctorsList, currencySymbol } = useContext(DoctorAppContext);
-
-// const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
-// const [doctorInfo, setDoctorInfo] = useState(null);
-// const [availableDocSlots, setAvailableDocSlots] = useState([]);
-// const [selectedSlotIndex, setSelectedSlotIndex] = useState(0);
-// const [selectedSlotTime, setSelectedSlotTime] = useState("");
 
 const appointmentSchema = new mongoose.Schema({
     userId: { type: String, required: true },

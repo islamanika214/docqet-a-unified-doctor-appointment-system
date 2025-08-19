@@ -59,6 +59,30 @@ const Appointment = () => {
                     minute: "2-digit",
                 });
 
+                ////
+
+                // let day = currentDate.getDate();
+                // let month = currentDate.getMonth() + 1;
+                // let year = currentDate.getFullYear();
+
+                // const slotDate = day + "_" + month + "_" + year;
+                // const slotTime = timeFormat;
+
+                // const isSlotAvailable =
+                //     doctorInfo.slots_booked[slotDate] &&
+                //     doctorInfo.slots_booked[slotDate].includes(slotTime)
+                //         ? false
+                //         : true;
+
+                // if (isSlotAvailable) {
+                //     timeSlots.push({
+                //         datetime: new Date(currentDate),
+                //         time: timeFormat,
+                //     });
+                // }
+
+                ////
+
                 timeSlots.push({
                     datetime: new Date(currentDate),
                     time: timeFormat,
