@@ -52,7 +52,18 @@ const MyAppointsments = () => {
 
     const cancelAppointment = async (appointmentId) => {
         try {
-            console.log(appointmentId);
+            const { data } = await axios.post(
+                backendUrl + "/api/user/cancel-appointment",
+                { appointmentId },
+                { headers: { token } }
+            );
+
+            if (data.success) {
+                toast.success(data.message);
+                getUserAppointments();
+            } else {
+                toast.error(data.message);
+            }
         } catch (error) {
             console.log(error);
             toast.error(error.message);
@@ -108,16 +119,28 @@ const MyAppointsments = () => {
                         <div></div>
 
                         <div className="flex flex-col gap-2 justify-end">
-                            <button className="border border-oliveWhisper sm:min-w-48 text-center py-2 text-sm hover:bg-darkMossyFog hover:text-white font-light transition-all duration-300">
-                                Pay Online
-                            </button>
+                            {/* {!item.cancelled && (
+                                <button className="border border-oliveWhisper sm:min-w-48 text-center py-2 text-sm hover:bg-darkMossyFog hover:text-white font-light transition-all duration-300">
+                                    Pay Online
+                                </button>
+                            )} */}
 
-                            <button
-                                onClick={() => cancelAppointment(item._id)}
-                                className="border border-oliveWhisper sm:min-w-48 text-center py-2 text-sm hover:bg-red-600 hover:text-white font-light transition-all duration-300"
-                            >
-                                Cancel Appointment
-                            </button>
+                            {!item.cancelled && (
+                                <button
+                                    onClick={() => cancelAppointment(item._id)}
+                                    className="border border-oliveWhisper sm:min-w-48 text-center py-2 text-sm hover:bg-red-600 hover:text-white font-light transition-all duration-300"
+                                >
+                                    Cancel Appointment
+                                </button>
+                            )}
+                            {item.cancelled && (
+                                <button
+                                    onClick={() => cancelAppointment(item._id)}
+                                    className="border border-red-600  text-red-600 sm:min-w-48 text-center py-2 text-sm"
+                                >
+                                    Appointment Cancelled
+                                </button>
+                            )}
                         </div>
                     </div>
                 ))}
