@@ -161,9 +161,14 @@ const bookAppointment = async (req, res) => {
         };
 
         const newAppointment = new appointmentModel(appointmentData);
+        await newAppointment.save();
+
+        await doctorModel.findByIdAndUpdate(docId, { slots_booked });
+
+        res.json({ success: true, message: "Appointment Booked" });
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: error.message });
     }
 };
-export { getProfile, loginUser, registerUser, updateProfile };
+export { bookAppointment, getProfile, loginUser, registerUser, updateProfile };

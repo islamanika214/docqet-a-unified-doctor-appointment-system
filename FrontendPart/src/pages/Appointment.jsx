@@ -1,12 +1,17 @@
+import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { assets } from "../assets/assets";
 import SimilarDoctors from "../components/SimilarDoctors";
 import { DoctorAppContext } from "../context/DoctorAppContexts";
 
 const Appointment = () => {
     const { docId } = useParams();
-    const { doctorsList, currencySymbol } = useContext(DoctorAppContext);
+    const { doctorsList, currencySymbol, backendUrl, token, getdoctorsData } =
+        useContext(DoctorAppContext);
+
+    const navigate = useNavigate();
 
     const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
@@ -64,6 +69,39 @@ const Appointment = () => {
             }
 
             setAvailableDocSlots((prev) => [...prev, timeSlots]);
+        }
+    };
+
+    const bookAppointment = async () => {
+        if (!token) {
+            toast.warn("Login to book appointment");
+            return navigate("/login");
+        }
+
+        try {
+            const date = availableDocSlots[selectedSlotIndex][0].datetime;
+
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+
+            const slotDate = day + "_" + month + "_" + year;
+
+            const { data } = await axios.post(
+                backendUrl + "/api/user/book-appointment",
+                { docId, slotDate, selectedSlotTime },
+                { headers: { token } }
+            );
+            if (data.success) {
+                toast.success(data.message);
+                getdoctorsData();
+                navigate("/my-appointments");
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message);
         }
     };
 
@@ -181,12 +219,14 @@ const Appointment = () => {
                             )}
                     </div>
 
-                    <button className="bg-sageGlow text-gray-50 text-sm font-light px-14 py-3 rounded-full my-6">
+                    <button
+                        onClick={bookAppointment}
+                        className="bg-sageGlow text-gray-50 text-sm font-light px-14 py-3 rounded-full my-6"
+                    >
                         Book an Appointment Now
                     </button>
                 </div>
 
-                {/* Listing similar doctors */}
                 <SimilarDoctors
                     docId={docId}
                     speciality={doctorInfo.speciality}
@@ -197,8 +237,3 @@ const Appointment = () => {
 };
 
 export default Appointment;
-
-// const [doctorInfo , setDoctorInfo] = useState(null)
-// const [availableDocSlots, setAvailableDocSlots] = useState([])
-// const [selectedSlotIndex, setSelectedSlotIndex] = useState(0)
-// const [selectedSlotTime, setSelectedSlotTime] = useState('')
