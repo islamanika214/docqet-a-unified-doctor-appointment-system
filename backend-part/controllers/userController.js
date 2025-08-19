@@ -155,9 +155,9 @@ const bookAppointment = async (req, res) => {
             selectedSlotTime,
             slotDate,
             date: Date.now(),
-            cancelled: false,
-            payment: false,
-            isCompleted: true,
+            // cancelled: false,
+            // payment: false,
+            // isCompleted: true,
         };
 
         const newAppointment = new appointmentModel(appointmentData);
