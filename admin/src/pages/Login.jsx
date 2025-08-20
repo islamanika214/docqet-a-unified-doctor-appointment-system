@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AdminContext } from "../context/AdminContext";
 import { DoctorContext } from "../context/DoctorContext";
 const Login = () => {
+    const navigate = useNavigate();
     const [state, setState] = useState("Admin");
 
     const [email, setEmail] = useState("");
@@ -18,7 +20,7 @@ const Login = () => {
         try {
             if (state === "Admin") {
                 const { data } = await axios.post(
-                    backendUrl + "/api/admin/login",
+                    backendUrl + "api/admin/login",
                     { email, password }
                 );
                 if (data.success) {
@@ -29,7 +31,7 @@ const Login = () => {
                 }
             } else {
                 const { data } = await axios.post(
-                    backendUrl + "/api/doctor/login",
+                    backendUrl + "api/doctor/login",
                     { email, password }
                 );
                 if (data.success) {
