@@ -119,11 +119,11 @@ const MyAppointsments = () => {
                         <div></div>
 
                         <div className="flex flex-col gap-2 justify-end">
-                            {/* {!item.cancelled && (
+                            {!item.cancelled && (
                                 <button className="border border-oliveWhisper sm:min-w-48 text-center py-2 text-sm hover:bg-darkMossyFog hover:text-white font-light transition-all duration-300">
                                     Pay Online
                                 </button>
-                            )} */}
+                            )}
 
                             {!item.cancelled && (
                                 <button

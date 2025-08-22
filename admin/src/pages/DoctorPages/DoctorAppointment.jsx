@@ -1,8 +1,11 @@
 import { useContext, useEffect } from "react";
+import { assets } from "../../assets/assets";
+import { DoctorAppContext } from "../../context/DoctorAppContext";
 import { DoctorContext } from "../../context/DoctorContext";
-
 const DoctorAppointment = () => {
     const { dToken, appointments, getAppointments } = useContext(DoctorContext);
+
+    const { calculateAge, slotDateFormate } = useContext(DoctorAppContext);
 
     useEffect(() => {
         if (dToken) {
@@ -10,7 +13,51 @@ const DoctorAppointment = () => {
         }
     }, [dToken]);
 
-    return <div></div>;
+    return (
+        <div className="w-full max-w-6xl m-5">
+            <p className="mb-3 text-lg font-medium">My All Appointments</p>
+            <div className="bg-oliveWhisper border rounded text-sm max-h-[80vh] min-h-[50vh] overflow-y-scroll">
+                <div className="max-sm:hidden grid grid-cols-[0.5fr_2fr_1fr_1fr_2fr_1fr_1fr] gap-1 py-3 px-6 border-b">
+                    <p>#</p>
+                    <p>Patient</p>
+                    <p>Payment</p>
+                    <p>Age</p>
+                    <p>Date & Time</p>
+                    <p>Fees</p>
+                    <p>Action</p>
+                </div>
+                {appointments.map((item, index) => (
+                    <div
+                        key={index}
+                        className="flex flex-wrap justify-between max-sm:gap-5 max-sm:text-base sm:grid grid-cols-[0.5fr_2fr_1fr_1fr_2fr_1fr_1fr] gap-1 items-center text-darkMossyFog py-3 px-6 border-b hover:bg-mintMist"
+                    >
+                        <p className="max-sm:hidden">{index + 1}</p>
+                        <div className="flex items-center gap-3">
+                            <img
+                                src={item.userData.photo}
+                                alt=""
+                                className="w-12 h-12 rounded-full"
+                            />
+                            <p>{item.userData.fullName}</p>
+                        </div>
+                        <div>
+                            <p>Payment: {item.payment ? "Online" : "CASH"}</p>
+                        </div>
+                        <p>{calculateAge(item.userData.dob)}</p>
+                        <p>
+                            {slotDateFormate(item.slotDate)},{" "}
+                            {item.selectedSlotTime}
+                        </p>
+                        <p>$ {item.consultationFee}</p>
+                        <div>
+                            <img src={assets.cancel_icon} alt="" />
+                            <img src={assets.tick_icon} alt="" />
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 };
 
 export default DoctorAppointment;
