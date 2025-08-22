@@ -66,4 +66,114 @@ const appointmentsDoctor = async (req, res) => {
     }
 };
 
-export { appointmentsDoctor, changeAvailability, doctorList, loginDoctor };
+const appointmentComplete = async (req, res) => {
+    try {
+        const { appointmentId } = req.body;
+        const docId = req.docId;
+        const appointmentData = await appointmentModel.findById(appointmentId);
+
+        if (
+            appointmentData &&
+            appointmentData.docId.toString() === docId.toString()
+        ) {
+            await appointmentModel.findByIdAndUpdate(appointmentId, {
+                isCompleted: true,
+            });
+            return res.json({
+                success: true,
+                message: "appointment Completed",
+            });
+        } else {
+            return res.json({ success: false, message: "Mark Failed" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+};
+
+const appointmentCancel = async (req, res) => {
+    try {
+        const { appointmentId } = req.body;
+        const docId = req.docId;
+
+        const appointmentData = await appointmentModel.findById(appointmentId);
+
+        if (
+            appointmentData &&
+            appointmentData.docId.toString() === docId.toString()
+        ) {
+            await appointmentModel.findByIdAndUpdate(appointmentId, {
+                cancelled: true,
+            });
+            return res.json({
+                success: true,
+                message: "Appointment Cancelled",
+            });
+        } else {
+            return res.json({
+                success: false,
+                message:
+                    "Cancellation Failed - Unauthorized or appointment not found",
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+};
+
+const doctorProfile = async (req, res) => {
+    try {
+        const docId = req.docId; // from auth middleware
+        const doctor = await doctorModel.findById(docId).select("-password");
+
+        if (!doctor) {
+            return res.json({ success: false, message: "Doctor not found" });
+        }
+
+        res.json({ success: true, doctor });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+};
+
+const updateDoctorProfile = async (req, res) => {
+    try {
+        const docId = req.docId; // from auth middleware
+        const updateData = req.body;
+
+        // Remove password from update data for security
+        delete updateData.password;
+        delete updateData._id;
+
+        const updatedDoctor = await doctorModel
+            .findByIdAndUpdate(docId, updateData, { new: true })
+            .select("-password");
+
+        if (!updatedDoctor) {
+            return res.json({ success: false, message: "Doctor not found" });
+        }
+
+        res.json({
+            success: true,
+            message: "Profile updated successfully",
+            doctor: updatedDoctor,
+        });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+};
+
+export {
+    appointmentCancel,
+    appointmentComplete,
+    appointmentsDoctor,
+    changeAvailability,
+    doctorList,
+    doctorProfile,
+    loginDoctor,
+    updateDoctorProfile,
+};
