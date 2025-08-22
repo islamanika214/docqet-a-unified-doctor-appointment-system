@@ -26,7 +26,7 @@ const Login = () => {
                 if (data.success) {
                     localStorage.setItem("aToken", data.token);
                     setAToken(data.token);
-                    navigate("/admin-dashboard");
+                    navigate("/doctor-list");
                 } else {
                     toast.error(data.message);
                 }
@@ -39,7 +39,7 @@ const Login = () => {
                     localStorage.setItem("dToken", data.token);
                     setDToken(data.token);
                     console.log(data.token);
-                    navigate("/doctor-dashboard");
+                    navigate("/doctor-profile");
                 } else {
                     toast.error(data.message);
                 }

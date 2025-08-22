@@ -11,7 +11,7 @@ const Sidebar = () => {
         <div className="min-h-screen bg-white border-r">
             {aToken && (
                 <ul className="text-mossyFog mt-5">
-                    <NavLink
+                    {/* <NavLink
                         className={({ isActive }) =>
                             `flex items-center gap-3 py-3.5 md:px-9 md:min-w-72 cursor-pointer ${
                                 isActive
@@ -37,7 +37,7 @@ const Sidebar = () => {
                     >
                         <img src={assets.appointment_icon} alt="" />
                         <p className="hidden md:block">Appointments</p>
-                    </NavLink>
+                    </NavLink> */}
 
                     <NavLink
                         className={({ isActive }) =>
@@ -71,7 +71,7 @@ const Sidebar = () => {
 
             {dToken && (
                 <ul className="text-mossyFog mt-5">
-                    <NavLink
+                    {/* <NavLink
                         className={({ isActive }) =>
                             `flex items-center gap-3 py-3.5 md:px-9 md:min-w-72 cursor-pointer ${
                                 isActive
@@ -83,7 +83,7 @@ const Sidebar = () => {
                     >
                         <img src={assets.home_icon} alt="" />
                         <p className="hidden md:block">Dashboard</p>
-                    </NavLink>
+                    </NavLink> */}
 
                     <NavLink
                         className={({ isActive }) =>

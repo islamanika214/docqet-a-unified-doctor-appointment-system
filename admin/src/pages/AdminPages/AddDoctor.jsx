@@ -5,7 +5,7 @@ import { assets } from "../../assets/assets";
 import { AdminContext } from "../../context/AdminContext";
 
 const AddDoctor = () => {
-    const [docImg, setDocImg] = useState(false);
+    const [docImg, setDocImg] = useState(null);
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,10 +17,18 @@ const AddDoctor = () => {
     const [street, setStreet] = useState("");
     const [area, setArea] = useState("");
 
+    const getAuthHeaders = () => ({
+        Authorization: `Bearer ${aToken}`,
+    });
+
     const { backendUrl, aToken } = useContext(AdminContext);
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
+        if (!aToken) {
+            toast.error("Not Authorized! Please log in as admin.");
+            return;
+        }
         try {
             if (!docImg) {
                 return toast.error("Image Not Selected");
