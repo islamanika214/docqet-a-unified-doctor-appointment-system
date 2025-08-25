@@ -69,8 +69,6 @@ DOCQET addresses these issues by:
 - **Frontend**: React.js
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
-- **Payment APIs**: Stripe / PayPal
-
 
 ## Installation
 
