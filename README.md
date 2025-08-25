@@ -4,7 +4,7 @@ A **web-based doctor appointment system** built with the **MERN stack (MongoDB, 
 
 DOCQET modernizes healthcare scheduling by providing secure, role-based access for patients, doctors, and administrators. It enables seamless appointment booking, payment integration, and efficient management of healthcare resources.
 
-<a href="https://your-link.com">
+<a href="[https://your-link.com](https://github.com/islamanika214/docqet-a-unified-doctor-appointment-system/tree/main/Screenshots)">
   <img src="https://img.shields.io/badge/View%20Screenshots-blue?style=for-the-badge" alt="button"/>
 </a>
 
