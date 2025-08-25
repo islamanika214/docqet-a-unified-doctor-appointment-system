@@ -115,14 +115,6 @@ DOCQET addresses these issues by:
 - Use the role-specific dashboards to manage appointments and profiles
 
 
-## Non-Functional Requirements
-
-- Handles **500+ concurrent users** without performance issues
-- Encrypted sensitive data (passwords, payments)
-- Fully responsive and available 24/7
-- Scalable, reliable, and modular codebase
-
-
 ## Future Enhancements
 
 - AI-powered doctor recommendations
@@ -131,9 +123,9 @@ DOCQET addresses these issues by:
 - Integration with hospital management systems
 
 
-## Contributors
+## Author
 
-- **Anika Islam** – Independent University, Bangladesh
+**Anika Islam** – Independent University, Bangladesh
 
 
 ## License
